@@ -30,6 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
     - name: Build and Push
+      run: echo "User = ${{ secrets.DOCKER_USERNAME }}"
       uses: docker/build-push-action@v5
       with:
         context: .
