@@ -29,3 +29,11 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+    - name: Build and Push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/gitactionsdemo:latest
+          ${{ secrets.DOCKER_USERNAME }}/gitactionsdemo:${{ github.sha }}
