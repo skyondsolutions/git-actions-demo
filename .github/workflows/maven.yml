@@ -38,3 +38,27 @@ jobs:
         tags: |
           ${{ secrets.DOCKER_USERNAME }}/gitactionsdemo:latest
           ${{ secrets.DOCKER_USERNAME }}/gitactionsdemo:${{ github.sha }}
+
+    - name: Configure AWS
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Login to ECR
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build Docker Image
+      run: |
+        docker build -t gitactionsdemo .
+
+    - name: Tag Image
+      run: |
+        docker tag gitactionsdemo:latest \
+        506511510920.dkr.ecr.us-east-1.amazonaws.com/spring-apps
+
+    - name: Push Image
+      run: |
+        docker push \
+        506511510920.dkr.ecr.us-east-1.amazonaws.com/spring-apps
