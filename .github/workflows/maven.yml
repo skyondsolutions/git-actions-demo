@@ -62,10 +62,11 @@ jobs:
       run: |
         docker push \
         506511510920.dkr.ecr.us-east-1.amazonaws.com/spring-apps
+
     - name: Deploy to ECS
-    uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    with:
-      task-definition: task-definition.json
-      service: springboot-apps-service-o946yzhn
-      cluster: cautious-horse-zcj55o
-      wait-for-service-stability: true
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+          task-definition: task-definition.json
+          service: springboot-apps-service-o946yzhn
+          cluster: cautious-horse-zcj55o
+          wait-for-service-stability: true
